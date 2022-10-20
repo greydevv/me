@@ -1,15 +1,17 @@
 
 
-export default function BoxGraphic({ className, left, children }) {
+export default function BoxGraphic({ className, left, extraBorderCls, extraBackdropCls, children }) {
 
   const borderCls = () => {
     const baseCls = "z-[-1] absolute w-full h-full border border-red top-5 pointer-events-none"
-    return `${left ? 'right-5' : 'left-5'} ${baseCls}`
+    const extraCls = !!extraBorderCls ? extraBorderCls : ""
+    return `${left ? 'right-5' : 'left-5'} ${baseCls} ${extraCls}`
   }
 
   const backdropCls = () => {
     const baseCls = "z-[-2] absolute w-full h-full bg-red-10 top-8 pointer-events-none"
-    return `${left ? 'right-8' : 'left-8'} ${baseCls}`
+    const extraCls = !!extraBackdropCls ? extraBackdropCls : ""
+    return `${left ? 'right-8' : 'left-8'} ${baseCls} ${extraCls}`
   }
 
   return (

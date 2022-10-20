@@ -52,7 +52,7 @@ export function NavItem({ to, linkText }) {
           { to === "/blog" &&
             <svg
               v-show="to === '/blog' && isActive"
-              className="absolute z-[-1] bottom-px"
+              className="absolute z-[-1] left-px bottom-px"
               width="47"
               height="8"
               viewBox="0 0 47 8"
@@ -79,7 +79,7 @@ export default function Navbar({ className }) {
 
   return (
     <div className={ containerCls() }>
-      <div className="flex flex-start border-box px-32 max-w-6xl mx-auto gap-x-5 items-center py-8">
+      <div className="flex justify-center md:justify-start border-box max-w-6xl px-10 md:px-32 mx-auto gap-x-5 items-center py-8">
         <NavItem to="/" linkText="about" />
         <NavItem to="/work" linkText="work" />
         <NavItem to="/blog" linkText="blog" />

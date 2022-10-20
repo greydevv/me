@@ -6,11 +6,11 @@
 
 @layer base {
   html {
-    @apply bg-light;
+    @apply bg-light overflow-hidden;
   }
 
   h1 {
-    @apply font-medium md:text-4xl font-ibm-plex-sans;
+    @apply font-medium text-4xl font-ibm-plex-sans;
   }
 
   h2 {
@@ -31,6 +31,10 @@
 
   .markdown p {
     @apply font-light text-lg max-w-3xl;
+  }
+
+  .writing-vert-rl {
+    writing-mode: vertical-rl;
   }
 
 }
