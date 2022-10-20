@@ -26,7 +26,7 @@ function WorkItem({ title, desc, tags, github }) {
           { !!github
             ? (
               <a
-                className="flex gap-x-2 cursor-pointer block static z-[2] font-medium text-2xl font-ibm-plex-sans"
+                className="flex gap-x-2 cursor-pointer block static z-[2] font-medium text-xl sm:text-2xl font-ibm-plex-sans"
                 href={ `https://github.com/${github}` }
                 target="_blank"
               >
@@ -39,7 +39,7 @@ function WorkItem({ title, desc, tags, github }) {
               </a>
             )
             : (
-              <h3 className="static z-[2]">
+              <h3 className="static z-[2] text-xl sm:text-2xl">
                 { title }
               </h3>
             )
@@ -111,7 +111,7 @@ function Work({ error, works }) {
   }
 
   const getTabCls = (isActive) => {
-    const baseCls = "text-left font-medium text-2xl font-ibm-plex-sans z-[2]"
+    const baseCls = "text-left font-medium text-xl sm:text-2xl font-ibm-plex-sans z-[2]"
     if (isActive) {
       return `${baseCls} text-dark`
     }
@@ -124,7 +124,7 @@ function Work({ error, works }) {
     <Default>
       <div className="flex flex-col gap-y-10 pb-40">
         <div className="flex items-center gap-x-2 sm:gap-x-4 text-center mx-auto md:mx-0">
-          <div className="flex relative pl-5 h-12">
+          <div className="flex relative pl-5 h-8 sm:h-12">
             <button 
               className={ getTabCls(!showExp) }
               onClick={ () => setShowExp(false) }
@@ -135,7 +135,7 @@ function Work({ error, works }) {
             { !showExp &&
               <img
                 src="proj_icon.svg"
-                className="absolute left-2 -bottom-2 h-12 z-[1]"
+                className="absolute left-2 -bottom-1 h-10 sm:h-12 z-[1]"
               />
             }
           </div>
@@ -150,16 +150,16 @@ function Work({ error, works }) {
             { showExp &&
               <img
                 src="exp_icon.svg"
-                className="absolute left-2 -bottom-2 h-12 z-[1]"
+                className="absolute left-2 -bottom-1 h-10 sm:h-12 z-[1]"
               />
             }
           </div>
         </div>
         {works.map(([year, items], i) => {
           return (
-            <div key={ i } className="flex gap-x-6">
-              <div className="border-r-2 border-red-10 w-9">
-                <h2 className="block transform text-red-10 rotate-180 writing-vert-rl">
+            <div key={ i } className="flex gap-x-4 sm:gap-x-6">
+              <div className="border-r-2 border-red-10 w-7 sm:w-9">
+                <h2 className="block transform text-red-10 rotate-180 writing-vert-rl text-xl sm:text-3xl">
                   { year }
                 </h2>
               </div>
@@ -185,13 +185,9 @@ function Work({ error, works }) {
 }
 
 export async function getServerSideProps() {
-  // console.log(client)
   const { error, data } = await client.query({
     query: WORK_QUERY,
   })
-  if (error) {
-    error.graphQLErrors.map(({ message }, i) => message)
-  }
 
   const errors = []
   if (error) {
