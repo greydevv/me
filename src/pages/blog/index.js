@@ -1,16 +1,11 @@
 import Default from "layouts/Default"
 import { BlogPost, FeaturedBlogPost } from "components/BlogPost"
 import { useQuery, useMutation } from "@apollo/client"
-import moment from "moment"
 import { BLOG_POSTS_QUERY } from "apollo/queries/blog"
 import client from "apollo"
+import { formatDate } from "dateutil"
 
 function Blog({ errors, featuredBlog, blogs }) {
-  
-  const formatDate = (date) => {
-    return moment(date).format("MMM. DD, YYYY")
-  }
-
   return (
     <Default>
       { !!!featuredBlog && blogs.length === 0 
