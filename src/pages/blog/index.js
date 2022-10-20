@@ -54,15 +54,15 @@ function Blog({ errors, featuredBlog, blogs }) {
 function NoBlogs() {
   return (
     <div className="w-full flex flex-col justify-center items-center text-center">
-      <h2 className="mb-2 font-ibm-plex-sans">
+      <h2 className="mb-2 text-2xl sm:text-3xl font-ibm-plex-sans">
         Nothing yet!
       </h2>
-      <p className="text-grey max-w-sm">
+      <p className="text-grey max-w-sm font-light">
         Please check back frequently as I update my blog with posts about computer science, engineering, art, and anything else I find interesting...
       </p>
-      <div className="my-8 w-[20%] border-grey-10 border"/>
+      <div className="my-4 sm:my-8 w-[20%] border-grey-10 border"/>
       <img 
-        className="text-red fill-red-10 h-20"
+        className="text-red fill-red-10 h-16 sm:h-20"
         src="signature.svg"
       />
     </div>
