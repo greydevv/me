@@ -19,6 +19,7 @@ module.exports = {
       
         'red': '#8F6D6D',
         'red-10': '#E9DFDF',
+        'red-20': '#F1ECEC',
       },
     },
   },
