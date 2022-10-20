@@ -150,7 +150,7 @@ function Work({ error, works }) {
             { showExp &&
               <img
                 src="exp_icon.svg"
-                className="absolute left-2 -bottom-1 h-10 sm:h-12 z-[1]"
+                className="absolute left-2 bottom-px h-10 sm:h-12 z-[1]"
               />
             }
           </div>
