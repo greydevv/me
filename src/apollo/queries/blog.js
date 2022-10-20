@@ -13,6 +13,19 @@ const BLOG_POSTS_QUERY = gql`
   }
 `
 
+const BLOG_SLUG_QUERY = gql`
+  query ($slug: String!, $public: Boolean!)  {
+    blog (query: { slug: $slug, public: $public } ) {
+      _id
+      title
+      body
+      date
+      public
+    }
+  }
+`
+
 export {
-  BLOG_POSTS_QUERY
+  BLOG_POSTS_QUERY,
+  BLOG_SLUG_QUERY
 }
