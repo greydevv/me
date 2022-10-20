@@ -19,19 +19,19 @@ export default function Home() {
               University at University Park.
             </p>
             <div className="flex gap-x-4 sm:gap-x-2">
-              <a href="https://www.linkedin.com/in/greyson-murray/">
+              <a href="https://www.linkedin.com/in/greyson-murray/" target="_blank">
                 <img
                   src="linkedin_contact.svg"
                   className={ contactCls }
                 />
               </a>
-              <a href="https://github.com/greydevv">
+              <a href="https://github.com/greydevv" target="_blank">
                 <img
                   src="github_contact.svg"
                   className={ contactCls }
                 />
               </a>
-              <a href="https://stackoverflow.com/users/12326283/gmdev">
+              <a href="https://stackoverflow.com/users/12326283/gmdev" target="_blank">
                 <img
                   src="stackoverflow_contact.svg"
                   className={ contactCls }
