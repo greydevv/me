@@ -54,9 +54,15 @@ function Blog({ errors, featuredBlog, blogs }) {
 function NoBlogs() {
   return (
     <div className="w-full flex flex-col justify-center items-center text-center">
-      <h2 className="mb-2 text-2xl sm:text-3xl font-ibm-plex-sans">
-        Nothing yet!
-      </h2>
+      <div className="relative mb-2">
+        <h2 className="relative text-2xl sm:text-3xl font-ibm-plex-sans z-[1]">
+          Nothing yet!
+        </h2>
+        <img
+          src="empty_icon.svg"
+          className="absolute -left-6 -bottom-1 h-10 sm:h-12"
+        />
+      </div>
       <p className="text-grey max-w-sm font-light">
         Please check back frequently as I update my blog with posts about computer science, engineering, art, and anything else I find interesting...
       </p>
