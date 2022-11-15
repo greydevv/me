@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useEffect, useState, useRef } from "react"
 
 export function NavItem({ to, linkText }) {
-
   const { pathname } = useRouter()
 
   const isActive = () => {
@@ -69,16 +69,52 @@ export function NavItem({ to, linkText }) {
 }
 
 export default function Navbar({ className }) {
+  const router = useRouter();
+  const [pageLoading, setPageLoading] = useState(false)
+  const baseLoadingCls = "h-full bg-red-10 transition-all duration-200 ease-in-out"
+  const [loadingCls, setLoadingCls] = useState(baseLoadingCls)
+
+  useEffect(() => {
+    const handleStart = () => { setPageLoading(true) }
+    const handleComplete = () => { setPageLoading(false) }
+
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleComplete)
+    router.events.on('routeChangeError', handleComplete)
+    return () => {
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeComplete', handleComplete)
+      router.events.off('routeChangeError', handleComplete)
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (pageLoading) {
+      setLoadingCls(`${baseLoadingCls}  w-[90%] sm:w-[85%] opacity-100`)
+    } else {
+      setLoadingCls(`${baseLoadingCls} w-0 opacity-0`)
+    }
+  }, [pageLoading])
+
   const containerCls = () => {
-    let baseCls = "bg-light w-full"
+    const baseCls = "bg-light w-full"
     if (className) {
       return `${className} ${baseCls}`
     }
     return baseCls
   }
 
+  // const progBarCls = () => {
+  //   if (pageLoading) {
+  //     return `${baseCls}`
+  //   }
+  // }
+
   return (
     <div className={ containerCls() }>
+      <div className="w-full h-1">
+        <div className={ loadingCls } />
+      </div>
       <div className="flex justify-center md:justify-start border-box max-w-6xl px-10 md:px-32 mx-auto gap-x-5 items-center py-8">
         <NavItem to="/" linkText="about" />
         <NavItem to="/work" linkText="work" />
