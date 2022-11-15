@@ -1,6 +1,6 @@
 import Default from "layouts/Default"
 import { useQuery } from "@apollo/client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import client from "apollo"
 import { WORK_QUERY } from "apollo/queries/work"
 
@@ -15,7 +15,7 @@ function WorkItem({ title, desc, tags, github }) {
   }
   
   return (
-    <div>
+    <div className="w-full bg-light">
       <div className="flex flex-col">
         <p className="attribute tracking-wide">
           { tags.join(' • ') }
@@ -30,8 +30,8 @@ function WorkItem({ title, desc, tags, github }) {
                 href={ `https://github.com/${github}` }
                 target="_blank"
               >
-                <img 
-                  className="static z-[2] h-6 w-6 mt-1"
+                <img  
+                  className="static z-[2] h-6 w-6 mt-[0.5] sm:mt-1"
                   src="github.svg"
                 />
                 
@@ -56,53 +56,17 @@ function WorkItem({ title, desc, tags, github }) {
   )
 }
 
-function Work({ error, works }) {
+function Work({ error, projects, experience }) {
   const [ showExp, setShowExp ] = useState(false)
+  const [ activeItems, setActiveItems ] = useState(projects)
 
-  const filterWorks = (works) => {
-    let workItems = new Map()
-
-    for (const work of works) {
-      if (showExp && work.isExperience || !showExp && !work.isExperience) {
-        if (work.interval.featured || !!!work.interval.year_end) {
-          const FEATURED_KEY = "NOW"
-          if (workItems.has(FEATURED_KEY)) {
-            workItems.set(FEATURED_KEY, [...workItems.get(FEATURED_KEY), work])
-          } else {
-            workItems.set(FEATURED_KEY, [work])
-          }
-        } else {
-          const year_begin = work.interval.year_begin
-          if (workItems.has(year_begin)) {
-            workItems.set(year_begin, [...workItems.get(year_begin), work])
-          } else {
-            workItems.set(year_begin, [work])
-          }
-        }
-      }
+  useEffect(() => {
+    if (showExp) {
+      setActiveItems(experience)
+    } else {
+      setActiveItems(projects)
     }
-
-    return workItems
-  }
-
-  const categoryCompare = (a, b) => {
-    if (b[0] === "NOW" && Number.isInteger(a[0])) {
-      return 1
-    } else if (a[0] === "NOW" && Number.isInteger(b[0])) {
-      return -1
-    }
-    // compare numerical categories (years), descending
-    return a[0] < b[0]
-  }
-
-  const itemCompare = (a, b) => {
-    if (a.interval.featured || b.interval.featured) {
-      // always put featured items at top of category
-      return 1
-    }
-    // otherwise, sort by the begin
-    return a.interval.month_begin > b.interval.month_begin
-  }
+  }, [showExp])
 
   const getItems = () => {
     for (const item of Array.from(filterWorks.data.works)) {
@@ -118,11 +82,9 @@ function Work({ error, works }) {
     return `${baseCls} text-red-10`
   }
 
-  works = Array.from(filterWorks(works)).reverse().sort(categoryCompare)
-
   return (
     <Default>
-      <div className="flex flex-col gap-y-10 pb-40">
+      <div className="flex flex-col gap-y-6 sm:gap-y-10 pb-40">
         <div className="flex items-center gap-x-2 sm:gap-x-4 text-center mx-auto md:mx-0">
           <div className="flex relative pl-5 h-8 sm:h-12">
             <button 
@@ -155,7 +117,7 @@ function Work({ error, works }) {
             }
           </div>
         </div>
-        {works.map(([year, items], i) => {
+        {activeItems.map(([year, items], i) => {
           return (
             <div key={ i } className="flex gap-x-4 sm:gap-x-6">
               <div className="border-r-2 border-red-10 w-7 sm:w-9">
@@ -163,8 +125,8 @@ function Work({ error, works }) {
                   { year }
                 </h2>
               </div>
-              <div className="flex flex-col gap-y-6 flex-1">
-                {items.sort(itemCompare).map((item, j) => {
+              <div className="flex flex-col gap-y-3 sm:gap-y-6 flex-1">
+                {items.map((item, j) => {
                   return (
                     <WorkItem 
                       key={ j }
@@ -196,12 +158,65 @@ export async function getServerSideProps() {
     })
   }
 
-  const works = errors.length === 0 ? data.works : []
+  const categoryCompare = (a, b) => {
+    if (b[0] === "NOW" && Number.isInteger(a[0])) {
+      return 1
+    } else if (a[0] === "NOW" && Number.isInteger(b[0])) {
+      return -1
+    }
+    // compare numerical categories (years), descending
+    return a[0] < b[0]
+  }
+
+  const itemCompare = (a, b) => {
+    if (a.interval.featured || b.interval.featured) {
+      // always put featured items at top of category
+      return 1
+    }
+    // otherwise, sort by the begin
+    return a.interval.month_begin > b.interval.month_begin
+  }
+
+  const filterWorks = (f, works) => {
+    let map = new Map()
+    for (const work of works) {
+      if (f(work)) {
+        if (work.interval.featured || !!!work.interval.year_end) {
+          const FEATURED_KEY = "NOW"
+          if (map.has(FEATURED_KEY)) {
+            map.set(FEATURED_KEY, [...map.get(FEATURED_KEY), work])
+          } else {
+            map.set(FEATURED_KEY, [work])
+          }
+        } else {
+          const year_begin = work.interval.year_begin
+          if (map.has(year_begin)) {
+            map.set(year_begin, [...map.get(year_begin), work])
+          } else {
+            map.set(year_begin, [work])
+          }
+        }
+      }
+    }
+
+    map.forEach((value, key) => {
+      if (value.length > 1) {
+        map.set(key, value.sort(itemCompare))
+      }
+    })
+
+    return Array.from(map).sort().reverse()
+  }
+
+  const projects = errors.length === 0 ? filterWorks((e) => !e.isExperience, data.works) : []
+  const experience = errors.length === 0 ? filterWorks((e) => e.isExperience, data.works) : []
 
   return {
     props: {
       errors: errors,
-      works: works
+      projects: projects,
+      experience: experience,
+      works: []
     }
   }
 }
