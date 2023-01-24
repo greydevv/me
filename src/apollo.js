@@ -6,7 +6,6 @@ const client = new ApolloClient({
       uri: `https://realm.mongodb.com/api/client/v2.0/app/${process.env.REALM_APP_ID}/graphql`,
       fetch: async (uri, options) => {
         const accessToken = await getAccessToken()
-        // console.log(accessToken)
         options.headers.Authorization = `Bearer ${accessToken}`
         return fetch(uri, options)
       }

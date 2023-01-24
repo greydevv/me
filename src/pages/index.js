@@ -45,7 +45,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-[300px_1fr] grid-rows-auto sm:grid-rows-1 gap-y-0 gap-x-0 sm:gap-x-8 mb-8">
           <BoxGraphic left className="col-start-1 row-start-1 mb-8 sm:mb-8 ml-8 sm:ml-0 aspect-square">
-            <img src="" className="h-full w-full object-cover"/>
+            <img src="" alt="me" className="h-full w-full object-cover"/>
           </BoxGraphic>
           <div className="flex flex-col col-start-1 sm:col-start-2 py-5 row-start-2 sm:row-start-1">
             <h1 className="mb-4 sm:mb-8 text-3xl sm:text-4xl">
