@@ -5,6 +5,8 @@ import moment from "moment"
 import { BLOG_POSTS_QUERY } from "apollo/queries/blog"
 import client from "apollo"
 
+import { TEST_BLOG } from "lookups.js"
+
 function Blog({ errors, featuredBlog, blogs }) {
   
   const formatDate = (date) => {
@@ -116,8 +118,8 @@ export async function getServerSideProps() {
       // featuredBlog: featuredBlog,
       // blogs: blogs,
       errors: [],
-      featuredBlog: null,
-      blogs: [],
+      featuredBlog: TEST_BLOG,
+      blogs: [TEST_BLOG],
     }
   }
 }
