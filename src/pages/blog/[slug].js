@@ -36,7 +36,7 @@ export default function BlogPostView() {
           //   // return <div key={ i }>{ e }</div>
           // })}
   return (
-    <Default noNavbar>
+    <Default navbarScrolls>
       <div className="max-w-2xl mx-auto">
         {/* <Link href="/blog">{ "<-- BACK" }</Link> */}
         <h1 className="text-5xl mt-4 mb-20">{ blog.title }</h1>
