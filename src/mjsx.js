@@ -2,12 +2,18 @@ import React from "react"
 import NextLink from "next/link"
 import MarkedReact from "marked-react"
 import SyntaxHighlighter from "react-syntax-highlighter"
+import { srcery } from "react-syntax-highlighter/dist/cjs/styles/hljs"
 import { marked } from "marked"
 
 const renderer = {
   code(code, lang, escaped) {
     return (
-      <SyntaxHighlighter key={ this.elementId } lang={ lang } PreTag={ Pre }>
+      <SyntaxHighlighter
+        key={ this.elementId }
+        lang={ lang }
+        PreTag={ Pre }
+        style={ srcery }
+      >
         { code }
       </SyntaxHighlighter>
     )
@@ -17,7 +23,7 @@ const renderer = {
   }
 }
 
-function Blockquote({ body }) {
+const Blockquote = ({ body }) => {
   return (
     <div className="rounded-sm grid grid-cols-[8px_1fr]">
       <div className="rounded-sm bg-red-10 h-full row-span-1 col-span-1 flex-1" />
