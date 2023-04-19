@@ -1,7 +1,12 @@
 import Navbar from 'components/Navbar'
 import Head from 'next/head'
 
-export default function Default({ noNavbar, children }) {
+export default function Default({ noNavbar, navbarScrolls, children }) {
+  const navbarCls = () => {
+    const baseCls = "z-50 left-0 top-0 w-full row-start-1 col-start-1"
+    return !!navbarScrolls ? baseCls : `${baseCls} sticky` 
+  }
+
   return (
     <div className="w-full bg-light">
         <Head>
@@ -30,7 +35,7 @@ export default function Default({ noNavbar, children }) {
         </Head>
         <div className="grid grid-rows-[auto_1fr] gap-y-6 sm:gap-y-10 md:gap-y-20 w-full h-screen overflow-y-scroll">
           { !noNavbar &&
-            <Navbar className="z-50 sticky left-0 top-0 w-full row-start-1 col-start-1" />
+            <Navbar className={ navbarCls() } />
           }
           <div className="w-full h-full border-box max-w-6xl px-10 md:px-32 mx-auto row-start-2 col-start-1">
             <div className="w-full h-full">
