@@ -121,7 +121,7 @@ function Work({ error, projects, experience }) {
           return (
             <div key={ i } className="flex gap-x-4 sm:gap-x-6">
               <div className="border-r-2 border-red-10 w-7 sm:w-9">
-                <h2 className="block transform text-red-10 rotate-180 writing-vert-rl text-xl sm:text-3xl">
+                <h2 className="[writing-mode:vertical-rl] block transform text-red-10 rotate-180 text-xl sm:text-3xl">
                   { year }
                 </h2>
               </div>
