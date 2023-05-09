@@ -71,7 +71,7 @@ export function NavItem({ to, linkText }) {
 export default function Navbar({ className }) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(false)
-  const baseLoadingCls = "h-full bg-red-10 transition-all duration-200 ease-in-out"
+  const baseLoadingCls = "h-full bg-dark transition-all duration-200 ease-in-out"
   const [loadingCls, setLoadingCls] = useState(baseLoadingCls)
 
   useEffect(() => {
