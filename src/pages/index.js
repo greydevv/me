@@ -1,6 +1,6 @@
+import Image from "next/image"
 import Default from "layouts/Default"
 import BoxGraphic from "components/BoxGraphic"
-import Image from "next/image"
 import { INTRO, ABOUT_ME } from "lookups"
 
 export default function Home() {
@@ -20,21 +20,27 @@ export default function Home() {
             </p>
             <div className="flex gap-x-4 sm:gap-x-2">
               <a href="https://www.linkedin.com/in/greyson-murray/" target="_blank">
-                <img
-                  src="linkedin_contact.svg"
+                <Image
+                  src="/icons/linkedin.svg"
                   className={ contactCls }
+                  width="24"
+                  height="24"
                 />
               </a>
               <a href="https://github.com/greydevv" target="_blank">
-                <img
-                  src="github_contact.svg"
+                <Image
+                  src="/icons/github.svg"
                   className={ contactCls }
+                  width="24"
+                  height="24"
                 />
               </a>
               <a href="https://stackoverflow.com/users/12326283/gmdev" target="_blank">
-                <img
-                  src="stackoverflow_contact.svg"
+                <Image
+                  src="/icons/stackoverflow.svg"
                   className={ contactCls }
+                  width="24"
+                  height="24"
                 />
               </a>
             </div>

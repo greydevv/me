@@ -3,17 +3,92 @@ import { useQuery } from "@apollo/client"
 import { useState, useEffect } from "react"
 import client from "apollo"
 import { WORK_QUERY } from "apollo/queries/work"
+import Image from "next/image"
 
-function WorkItem({ title, desc, tags, github }) {
+const WorkItemTitle = ({ title, github, site, logo }) => {
+  const hasLink = !!github || !!site
+  const hasLogo = !!logo
 
-  const githubCls = () => {
+  const makeLinkCls = () => {
     const baseCls = "relative flex gap-x-2 pr-2 mb-0.5"
-    if (!!github) {
+    if (hasLink) {
       return `${baseCls} group`
     }
     return baseCls
   }
-  
+
+  const makeHref = () => {
+    return !!github
+      ? `https://github.com/${github}`
+      : `https://www.${site}`
+  }
+
+  const makeSrc = () => {
+    if (hasLogo) {
+      return `https://${process.env.NEXT_PUBLIC_S3_ORIGIN}/logos/${logo}.png`
+    } else if (hasLink) {
+      return !!github
+        ? `/icons/github.svg`
+        : `/icons/url.svg`
+    }
+  }
+
+  if (hasLogo) {
+    return (
+      <div className="flex gap-x-2 pr-2 mb-0.5">
+        <div className="flex items-center">
+          <Image
+            className="box-border static z-[2] h-6 w-6 mt-[0.5] sm:mt-1"
+            src={ makeSrc() }
+            width="24"
+            height="24"
+          />
+        </div>
+        <h3 className="static z-[2] text-xl sm:text-2xl">
+          { title }
+        </h3>
+      </div>
+    )
+  } else if (hasLink) {
+    return (
+      <div className={ makeLinkCls() }>
+        <a
+          className="flex gap-x-2 cursor-pointer block static z-[2] font-medium text-xl sm:text-2xl font-ibm-plex-sans"
+          href={ `https://github.com/${!!github ? github : site}` }
+          target="_blank"
+        >
+          <Image
+            className="static z-[2] h-6 w-6"
+            src={ makeSrc() }
+            width="24"
+            height="24"
+          />
+
+          { title }
+        </a>
+        <div className="absolute z-[1] h-2.5 bg-red-10 bottom-1 transition-all duration-300 w-0 group-hover:w-full"/>
+      </div>
+    )
+  } else {
+    return (
+      <h3 className="static z-[2] text-xl sm:text-2xl">
+        { title }
+      </h3>
+    )
+  }
+}
+
+function WorkItem({ title, desc, tags, github, site, logo }) {
+  const hasLink = !!github || !!site
+
+  const makeLinkCls = () => {
+    const baseCls = "relative flex gap-x-2 pr-2 mb-0.5"
+    if (hasLink) {
+      return `${baseCls} group`
+    }
+    return baseCls
+  }
+
   return (
     <div className="w-full bg-light">
       <div className="flex flex-col">
@@ -22,36 +97,47 @@ function WorkItem({ title, desc, tags, github }) {
         </p>
       </div>
       <div className="flex">
-        <div className={ githubCls() }>
-          { !!github
-            ? (
-              <a
-                className="flex gap-x-2 cursor-pointer block static z-[2] font-medium text-xl sm:text-2xl font-ibm-plex-sans"
-                href={ `https://github.com/${github}` }
-                target="_blank"
-              >
-                <img  
-                  className="static z-[2] h-6 w-6 mt-[0.5] sm:mt-1"
-                  src="github.svg"
-                />
-                
-                { title }
-              </a>
-            )
-            : (
-              <h3 className="static z-[2] text-xl sm:text-2xl">
-                { title }
-              </h3>
-            )
-          }
-          { !!github &&
-            <div className="absolute z-[1] h-2.5 bg-red-10 bottom-1 transition-all duration-300 w-0 group-hover:w-full"/>
-          }
-        </div>
+        <WorkItemTitle
+          title={ title }
+          github={ github }
+          site={ site }
+          logo={ logo }
+        />
       </div>
       <p className="font-light max-w-lg">
         { desc }
       </p>
+    </div>
+  )
+}
+
+const WorkTab = ({ title, icon, isActive, onClick }) => {
+  const getTabCls = () => {
+    const baseCls = "text-left font-medium text-xl sm:text-2xl font-ibm-plex-sans z-[2]"
+    if (isActive) {
+      return `${baseCls} text-dark`
+    }
+    return `${baseCls} text-red-10`
+  }
+
+  return (
+    <div className="flex relative pl-5 h-8 sm:h-12">
+      <button
+        className={ getTabCls() }
+        onClick={ onClick }
+        disabled={ isActive }
+      >
+        { title }
+      </button>
+      { isActive &&
+        <div className="absolute left-2 -bottom-1 w-12 h-10 sm:h-12 z-[1]">
+          <Image
+            src={ icon }
+            className="relative"
+            layout="fill"
+          />
+        </div>
+      }
     </div>
   )
 }
@@ -68,54 +154,22 @@ function Work({ error, projects, experience }) {
     }
   }, [showExp])
 
-  const getItems = () => {
-    for (const item of Array.from(filterWorks.data.works)) {
-
-    }
-  }
-
-  const getTabCls = (isActive) => {
-    const baseCls = "text-left font-medium text-xl sm:text-2xl font-ibm-plex-sans z-[2]"
-    if (isActive) {
-      return `${baseCls} text-dark`
-    }
-    return `${baseCls} text-red-10`
-  }
-
   return (
     <Default>
       <div className="flex flex-col gap-y-6 sm:gap-y-10 pb-40">
         <div className="flex items-center gap-x-2 sm:gap-x-4 text-center mx-auto md:mx-0">
-          <div className="flex relative pl-5 h-8 sm:h-12">
-            <button 
-              className={ getTabCls(!showExp) }
-              onClick={ () => setShowExp(false) }
-              disabled={ !showExp }
-            >
-              PROJECTS
-            </button>
-            { !showExp &&
-              <img
-                src="proj_icon.svg"
-                className="absolute left-2 -bottom-1 h-10 sm:h-12 z-[1]"
-              />
-            }
-          </div>
-          <div className="flex relative pl-5 h-12">
-            <button
-              className={ getTabCls(showExp) }
-              onClick={ () => setShowExp(true) }
-              disabled={ showExp }
-            >
-              EXPERIENCE
-            </button>
-            { showExp &&
-              <img
-                src="exp_icon.svg"
-                className="absolute left-2 bottom-px h-10 sm:h-12 z-[1]"
-              />
-            }
-          </div>
+          <WorkTab
+            title="PROJECTS"
+            icon="/icons/document.svg"
+            isActive={ !showExp }
+            onClick={ () => setShowExp(false) }
+          />
+          <WorkTab
+            title="EXPERIENCE"
+            icon="/icons/bookmark.svg"
+            isActive={ showExp }
+            onClick={ () => setShowExp(true) }
+          />
         </div>
         {activeItems.map(([year, items], i) => {
           return (
@@ -128,12 +182,14 @@ function Work({ error, projects, experience }) {
               <div className="flex flex-col gap-y-3 sm:gap-y-6 flex-1">
                 {items.map((item, j) => {
                   return (
-                    <WorkItem 
+                    <WorkItem
                       key={ j }
                       title={ item.title }
                       desc={ item.desc }
                       tags={ item.tags }
                       github={ item.github }
+                      site={ item.site }
+                      logo={ item.logo }
                     />
                   )
                 })}

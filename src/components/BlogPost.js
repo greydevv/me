@@ -1,24 +1,7 @@
-import BoxGraphic from 'components/BoxGraphic'
-import Link from 'next/link'
-
-function BlogTag({ text, small }) {
-
-  const tagCls = () => {
-    const baseCls = "py-1 bg-dark"
-    if (!!small) {
-      return `px-2 text-sm font-base ${baseCls}`
-    }
-    return `px-4 ${baseCls}`
-  }
-
-  return (
-    <div className={ tagCls() } >
-      <p className="text-light tracking-widest font-ibm-plex-sans">
-        { text.toUpperCase() }
-      </p>
-    </div>
-  )
-}
+import Link from "next/link"
+import Image from "next/image"
+import BoxGraphic from "components/BoxGraphic"
+import BlogTags from "components/BlogTags"
 
 export function BlogPost({ slug, title, date, hook, tags }) {
   return (
@@ -36,18 +19,8 @@ export function BlogPost({ slug, title, date, hook, tags }) {
           { hook }
         </p>
         { tags.length > 0 &&
-          <div
-            className="col-start-1 row-start-1 row-end-3 flex gap-x-2"
-          >
-            { tags.map((tag, i) => {
-              return (
-                <BlogTag
-                  key={ i }
-                  text={ tag }
-                  small
-                />
-              )
-            })}
+          <div className="col-start-1 row-start-1 row-end-3 flex gap-x-2">
+            <BlogTags tags={ tags } />
           </div>
         }
       </div>
@@ -56,6 +29,7 @@ export function BlogPost({ slug, title, date, hook, tags }) {
 }
 
 export function FeaturedBlogPost({ slug, title, date, hook, tags, imgSrc }) {
+  console.log(`https://${process.env.NEXT_PUBLIC_S3_ORIGIN}/blogs/${slug}.png`)
   return (
     <Link href={ `/blog/${slug}` }>
       <div className="cursor-pointer grid md:grid-cols-[1fr_300px] md:grid-rows-1 grid-cols-1 grid-rows-[300px_1fr] gap-x-8 gap-y-8 group">
@@ -73,14 +47,7 @@ export function FeaturedBlogPost({ slug, title, date, hook, tags, imgSrc }) {
             <div
               className="flex flex-wrap gap-2"
             >
-              { tags.map((tag, i) => {
-                return (
-                  <BlogTag
-                    key={ i }
-                    text={ tag }
-                  />
-                )
-              })}
+              <BlogTags tags={ tags } />
             </div>
           }
         </div>
@@ -89,8 +56,11 @@ export function FeaturedBlogPost({ slug, title, date, hook, tags, imgSrc }) {
           extraBorderCls="transition-all duration-250 group-hover:left-2 group-hover:top-4"
           extraBackdropCls="transition-all duration-250 group-hover:left-4 group-hover:top-6"
         >
-          <div className="w-full h-full bg-dark">
-            IMG
+          <div className="relative h-full bg-dark aspect-square mx-auto">
+            <Image
+              src={ `https://${process.env.NEXT_PUBLIC_S3_ORIGIN}/blogs/${slug}.png` }
+              layout="fill"
+            />
           </div>
         </BoxGraphic>
       </div>

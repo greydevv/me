@@ -2,7 +2,7 @@ import React from "react"
 import NextLink from "next/link"
 import MarkedReact from "marked-react"
 import SyntaxHighlighter from "react-syntax-highlighter"
-import { srcery } from "react-syntax-highlighter/dist/cjs/styles/hljs"
+import { ocean as HLJS_THEME } from "react-syntax-highlighter/dist/cjs/styles/hljs"
 import { marked } from "marked"
 
 const renderer = {
@@ -10,12 +10,21 @@ const renderer = {
     return (
       <SyntaxHighlighter
         key={ this.elementId }
-        lang={ lang }
+        language={ lang }
         PreTag={ Pre }
-        style={ srcery }
+        style={ HLJS_THEME }
       >
         { code }
       </SyntaxHighlighter>
+    )
+  },
+  codespan(code, lang) {
+    return (
+      <code>
+        <span className="text-[#688CAD] text-base">
+          { code }
+        </span>
+      </code>
     )
   },
   blockquote(quote) {

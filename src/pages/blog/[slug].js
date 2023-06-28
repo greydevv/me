@@ -1,48 +1,50 @@
-import React from "react"
-import Default from "layouts/Default"
+import moment from "moment"
+import client from "apollo"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/router"
+import Default from "layouts/Default"
 import Markdown from "mjsx"
+import BlogTags from "components/BlogTags"
+import { BLOG_POST_QUERY } from "apollo/queries/blog"
 
-// import gql from "graphql-tag"
-//
-// const BLOG_POST_QUERY = gql`
-//   query ($slug: String!, $public: Boolean!)  {
-//     blog (query: { slug: $slug, public: $public } ) {
-//       _id
-//       title
-//       body
-//       date
-//       public
-//     }
-//   }
-// `
+export default function BlogPostView({ blog }) {
+  const blog_body = blog.body.join("\n")
+  let min_read = Math.round((blog_body.length / 2) / 200)
+  if (min_read === 0) {
+    min_read = 1
+  }
 
-import { TEST_BLOG } from "lookups.js"
+  const formatDate = (date) => {
+    return moment(date).format("MMM. DD, YYYY")
+  }
 
-export default function BlogPostView() {
-  const blog = TEST_BLOG
-
-  // const blogJsx = marked.parse(blog.content.join("\n\n"))
-
-          // {blogJsx.map((e, i) => {
-          //   // if (typeof e === "string") {
-          //   //   throw new Error(`Expected JSX element but found string: ${e}`)
-          //   // }
-          //   // return <React.Fragment key={ i }>{ e }</React.Fragment>
-          //   // console.log(i)
-          //   // console.log(e)
-          //   return <React.Fragment key={ i }>{ e }</React.Fragment>
-          //   // return <div key={ i }>{ e }</div>
-          // })}
   return (
     <Default navbarScrolls>
       <div className="max-w-2xl mx-auto">
-        {/* <Link href="/blog">{ "<-- BACK" }</Link> */}
-        <h1 className="text-5xl mt-4 mb-20">{ blog.title }</h1>
+        <div className="mb-20 mt-2">
+          <Link href="/blog" className="w-full h-full">
+            <a>
+              <Image
+                src="/icons/back_arrow.svg"
+                height="13"
+                width="26"
+              />
+            </a>
+          </Link>
+          <h1 className="text-5xl mt-4 mb-2">
+            { blog.title }
+          </h1>
+          <p className="attribute tracking-wide">
+            { formatDate(blog.date) } • { min_read } min. read
+          </p>
+          <div className="flex gap-x-2 mt-4">
+            <BlogTags tags={ blog.tags } />
+          </div>
+        </div>
         <div className="flex flex-col gap-y-4 mb-20">
           <Markdown>
-            { blog.content.join("\n") }
+            { blog_body }
           </Markdown>
         </div>
       </div>
@@ -50,10 +52,18 @@ export default function BlogPostView() {
   )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ params }) {
+  const { error, data } = await client.query({
+    query: BLOG_POST_QUERY,
+    variables: {
+      slug: params.slug,
+      public: true,
+    }
+  })
+
   return {
     props: {
-      blogHtml: []
+      blog: data.blog
     }
   }
 }

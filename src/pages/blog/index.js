@@ -8,14 +8,14 @@ import client from "apollo"
 import { TEST_BLOG } from "lookups.js"
 
 function Blog({ errors, featuredBlog, blogs }) {
-  
+
   const formatDate = (date) => {
     return moment(date).format("MMM. DD, YYYY")
   }
 
   return (
     <Default>
-      { !!!featuredBlog && blogs.length === 0 
+      { !!!featuredBlog && blogs.length === 0
         ? (
           <NoBlogs />
         )
@@ -69,7 +69,7 @@ function NoBlogs() {
         Please check back frequently as I update my blog with posts about computer science, engineering, art, and anything else I find interesting...
       </p>
       <div className="my-4 sm:my-8 w-[20%] border-grey-10 border"/>
-      <img 
+      <img
         className="text-red fill-red-10 h-16 sm:h-20"
         src="signature.svg"
       />
@@ -78,48 +78,48 @@ function NoBlogs() {
 }
 
 export async function getServerSideProps() {
-  // const { error: blogError, data: blogData } = await client.query({
-  //   query: BLOG_POSTS_QUERY,
-  //   variables: {
-  //     public: true,
-  //     featured: false,
-  //   }
-  // })
-  //
-  // const { error: featuredError, data: featuredData } = await client.query({
-  //   query: BLOG_POSTS_QUERY,
-  //   variables: {
-  //     public: true,
-  //     featured: true,
-  //   }
-  // })
-  //
-  // const errors = []
-  // if (blogError) {
-  //   console.log(blogError)
-  //   blogError.graphQLErrors.forEach(({ message }) => {
-  //     errors.push(message)
-  //   })
-  // }
-  //
-  // if (featuredError) {
-  //   console.log(featuredError)
-  //   featuredError.graphQLErrors.forEach(({ message }) => {
-  //     errors.push(message)
-  //   })
-  // }
-  //
-  // const featuredBlog = errors.length === 0 ? featuredData.blogs[0] : []
-  // const blogs = errors.length === 0 ? blogData.blogs : []
+  const { error: blogError, data: blogData } = await client.query({
+    query: BLOG_POSTS_QUERY,
+    variables: {
+      public: true,
+      featured: false,
+    }
+  })
+
+  const { error: featuredError, data: featuredData } = await client.query({
+    query: BLOG_POSTS_QUERY,
+    variables: {
+      public: true,
+      featured: true,
+    }
+  })
+
+  const errors = []
+  if (blogError) {
+    console.log(blogError)
+    blogError.graphQLErrors.forEach(({ message }) => {
+      errors.push(message)
+    })
+  }
+
+  if (featuredError) {
+    console.log(featuredError)
+    featuredError.graphQLErrors.forEach(({ message }) => {
+      errors.push(message)
+    })
+  }
+
+  const featuredBlog = errors.length === 0 ? featuredData.blogs[0] : []
+  const blogs = errors.length === 0 ? blogData.blogs : []
 
   return {
     props: {
-      // errors: errors,
-      // featuredBlog: featuredBlog,
-      // blogs: blogs,
-      errors: [],
-      featuredBlog: TEST_BLOG,
-      blogs: [TEST_BLOG],
+      errors: errors,
+      ...(!!featuredBlog && { featuredBlog: featuredBlog }),
+      blogs: blogs,
+      // errors: [],
+      // featuredBlog: TEST_BLOG,
+      // blogs: [TEST_BLOG],
     }
   }
 }

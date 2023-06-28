@@ -6,6 +6,8 @@ const WORK_QUERY = gql`
       _id
       title
       github
+      site
+      logo
       desc
       tags
       isExperience
