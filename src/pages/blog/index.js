@@ -96,14 +96,12 @@ export async function getServerSideProps() {
 
   const errors = []
   if (blogError) {
-    console.log(blogError)
     blogError.graphQLErrors.forEach(({ message }) => {
       errors.push(message)
     })
   }
 
   if (featuredError) {
-    console.log(featuredError)
     featuredError.graphQLErrors.forEach(({ message }) => {
       errors.push(message)
     })

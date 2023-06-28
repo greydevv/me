@@ -29,7 +29,6 @@ export function BlogPost({ slug, title, date, hook, tags }) {
 }
 
 export function FeaturedBlogPost({ slug, title, date, hook, tags, imgSrc }) {
-  console.log(`https://${process.env.NEXT_PUBLIC_S3_ORIGIN}/blogs/${slug}.png`)
   return (
     <Link href={ `/blog/${slug}` }>
       <div className="cursor-pointer grid md:grid-cols-[1fr_300px] md:grid-rows-1 grid-cols-1 grid-rows-[300px_1fr] gap-x-8 gap-y-8 group">
