@@ -14,7 +14,6 @@ export default function BlogPostView({ blog }) {
   if (min_read === 0) {
     min_read = 1
   }
-
   const formatDate = (date) => {
     return moment(date).format("MMM. DD, YYYY")
   }
