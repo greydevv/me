@@ -9,7 +9,7 @@ import BlogTags from "components/BlogTags"
 import { BLOG_POST_QUERY } from "apollo/queries/blog"
 
 export default function BlogPostView({ blog }) {
-  const blog_body = blog.body.join("\n")
+  const blog_body = blog.body.replaceAll("\\n", "\n")
   let min_read = Math.round((blog_body.length / 2) / 200)
   if (min_read === 0) {
     min_read = 1
@@ -22,16 +22,16 @@ export default function BlogPostView({ blog }) {
   return (
     <Default navbarScrolls>
       <div className="max-w-2xl mx-auto">
-        <div className="mb-20 mt-2">
-          <Link href="/blog" className="w-full h-full">
-            <a>
+        <div className="mb-8 mt-2">
+          <div className="flex">
+            <Link href="/blog">
               <Image
                 src="/icons/back_arrow.svg"
                 height="13"
                 width="26"
               />
-            </a>
-          </Link>
+            </Link>
+          </div>
           <h1 className="text-5xl mt-4 mb-2">
             { blog.title }
           </h1>
@@ -42,7 +42,7 @@ export default function BlogPostView({ blog }) {
             <BlogTags tags={ blog.tags } />
           </div>
         </div>
-        <div className="flex flex-col gap-y-4 mb-20">
+        <div className="flex flex-col gap-y-4 mb-20 leading-relaxed">
           <Markdown>
             { blog_body }
           </Markdown>

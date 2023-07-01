@@ -5,9 +5,7 @@ import moment from "moment"
 import { BLOG_POSTS_QUERY } from "apollo/queries/blog"
 import client from "apollo"
 
-import { TEST_BLOG } from "lookups.js"
-
-function Blog({ errors, featuredBlog, blogs }) {
+function Blog({ errors, featuredBlogs, blogs }) {
 
   const formatDate = (date) => {
     return moment(date).format("MMM. DD, YYYY")
@@ -15,21 +13,26 @@ function Blog({ errors, featuredBlog, blogs }) {
 
   return (
     <Default>
-      { !!!featuredBlog && blogs.length === 0
-        ? (
-          <NoBlogs />
-        )
+      { featuredBlogs.length === 0 && blogs.length === 0
+        ? <NoBlogs />
         : (
           <>
-            <div className="mb-16">
-              <FeaturedBlogPost
-                slug={ featuredBlog.slug }
-                title={ featuredBlog.title }
-                date={ formatDate(featuredBlog.date) }
-                hook={ featuredBlog.hook }
-                tags={ featuredBlog.tags }
-              />
-            </div>
+            { featuredBlogs.length > 0 &&
+              <div className="flex flex-col gap-y-16 mb-16">
+                { featuredBlogs.map((blog, i) => {
+                  return (
+                    <FeaturedBlogPost
+                      key={ i }
+                      slug={ blog.slug }
+                      title={ blog.title }
+                      date={ formatDate(blog.date) }
+                      hook={ blog.hook }
+                      tags={ blog.tags }
+                    />
+                  )
+                })}
+              </div>
+            }
             { blogs.length > 0 &&
               <div className="flex flex-col gap-y-8 pb-20">
                 { blogs.map((blog, i) => {
@@ -107,17 +110,14 @@ export async function getServerSideProps() {
     })
   }
 
-  const featuredBlog = errors.length === 0 ? featuredData.blogs[0] : []
+  const featuredBlog = errors.length === 0 ? featuredData.blogs : []
   const blogs = errors.length === 0 ? blogData.blogs : []
 
   return {
     props: {
       errors: errors,
-      ...(!!featuredBlog && { featuredBlog: featuredBlog }),
+      featuredBlogs: featuredBlog,
       blogs: blogs,
-      // errors: [],
-      // featuredBlog: TEST_BLOG,
-      // blogs: [TEST_BLOG],
     }
   }
 }

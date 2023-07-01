@@ -36,9 +36,9 @@ const WorkItemTitle = ({ title, github, site, logo }) => {
   if (hasLogo) {
     return (
       <div className="flex gap-x-2 pr-2 mb-0.5">
-        <div className="flex items-center">
+        <div className="flex flex-col justify-center">
           <Image
-            className="box-border static z-[2] h-6 w-6 mt-[0.5] sm:mt-1"
+            className="static z-[2] h-6 w-6"
             src={ makeSrc() }
             width="24"
             height="24"
@@ -54,16 +54,17 @@ const WorkItemTitle = ({ title, github, site, logo }) => {
       <div className={ makeLinkCls() }>
         <a
           className="flex gap-x-2 cursor-pointer block static z-[2] font-medium text-xl sm:text-2xl font-ibm-plex-sans"
-          href={ `https://github.com/${!!github ? github : site}` }
+          href={ makeHref() }
           target="_blank"
         >
-          <Image
-            className="static z-[2] h-6 w-6"
-            src={ makeSrc() }
-            width="24"
-            height="24"
-          />
-
+          <div className="flex flex-col justify-center">
+            <Image
+              className="static z-[2] h-6 w-6"
+              src={ makeSrc() }
+              width="24"
+              height="24"
+            />
+          </div>
           { title }
         </a>
         <div className="absolute z-[1] h-2.5 bg-red-10 bottom-1 transition-all duration-300 w-0 group-hover:w-full"/>
@@ -134,7 +135,7 @@ const WorkTab = ({ title, icon, isActive, onClick }) => {
           <Image
             src={ icon }
             className="relative"
-            layout="fill"
+            fill
           />
         </div>
       }

@@ -15,12 +15,8 @@ export function NavItem({ to, linkText }) {
 
   return (
     <div className="relative">
-      <Link
-        href={ to }
-      >
-        <a className={ linkCls() }>
-          { linkText }
-        </a>
+      <Link href={ to } className={ linkCls() }>
+        { linkText }
       </Link>
       { isActive() &&
         <>

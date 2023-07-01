@@ -58,7 +58,7 @@ export function FeaturedBlogPost({ slug, title, date, hook, tags, imgSrc }) {
           <div className="relative h-full bg-dark aspect-square mx-auto">
             <Image
               src={ `https://${process.env.NEXT_PUBLIC_S3_ORIGIN}/blogs/${slug}.png` }
-              layout="fill"
+              fill
             />
           </div>
         </BoxGraphic>
