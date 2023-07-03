@@ -1,11 +1,14 @@
 import Navbar from 'components/Navbar'
 import Head from 'next/head'
 
-export default function Default({ noNavbar, navbarScrolls, children }) {
+export default function Default({ paddingCls, noNavbar, navbarScrolls, children }) {
   const navbarCls = () => {
     const baseCls = "z-50 left-0 top-0 w-full row-start-1 col-start-1"
     return !!navbarScrolls ? baseCls : `${baseCls} sticky`
   }
+
+  paddingCls = paddingCls ?? "px-10 md:px-32";
+  const containerCls = `w-screen h-full border-box max-w-6xl ${paddingCls} mx-auto row-start-2 col-start-1`
 
   return (
     <div className="w-full bg-light">
@@ -37,7 +40,7 @@ export default function Default({ noNavbar, navbarScrolls, children }) {
           { !noNavbar &&
             <Navbar className={ navbarCls() } />
           }
-          <div className="w-screen h-full border-box max-w-6xl px-10 md:px-32 mx-auto row-start-2 col-start-1">
+          <div className={ containerCls }>
             <div className="w-full h-full">
               <main>
                 { children }

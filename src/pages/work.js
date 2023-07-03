@@ -156,7 +156,7 @@ function Work({ error, projects, experience }) {
   }, [showExp])
 
   return (
-    <Default>
+    <Default paddingCls="pr-10 pl-5 sm:px-32">
       <div className="flex flex-col gap-y-6 sm:gap-y-10 pb-40">
         <div className="flex items-center gap-x-2 sm:gap-x-4 text-center mx-auto md:mx-0">
           <WorkTab
@@ -172,7 +172,7 @@ function Work({ error, projects, experience }) {
             onClick={ () => setShowExp(true) }
           />
         </div>
-        {activeItems.map(([year, items], i) => {
+        { activeItems.map(([year, items], i) => {
           return (
             <div key={ i } className="flex gap-x-4 sm:gap-x-6">
               <div className="border-r-2 border-red-10 w-7 sm:w-9">
