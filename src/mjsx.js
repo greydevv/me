@@ -8,14 +8,16 @@ import { marked } from "marked"
 const renderer = {
   code(code, lang, escaped) {
     return (
-      <SyntaxHighlighter
-        key={ this.elementId }
-        language={ lang }
-        PreTag={ Pre }
-        style={ HLJS_THEME }
-      >
-        { code }
-      </SyntaxHighlighter>
+      <div className="p-2 sm:p-4 rounded-sm bg-dark box-border overflow-hidden">
+        <SyntaxHighlighter
+          key={ this.elementId }
+          language={ lang }
+          PreTag={ Pre }
+          style={ HLJS_THEME }
+        >
+          { code }
+        </SyntaxHighlighter>
+      </div>
     )
   },
   codespan(code, lang) {
@@ -78,7 +80,7 @@ const Blockquote = ({ body }) => {
 
 const Pre = ({ children }) => {
   return (
-    <pre className="p-2 sm:p-4 rounded-sm bg-dark text-red-10">
+    <pre className="overflow-x-scroll text-red-10">
       { children }
     </pre>
   )

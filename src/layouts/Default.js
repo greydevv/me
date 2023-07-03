@@ -4,7 +4,7 @@ import Head from 'next/head'
 export default function Default({ noNavbar, navbarScrolls, children }) {
   const navbarCls = () => {
     const baseCls = "z-50 left-0 top-0 w-full row-start-1 col-start-1"
-    return !!navbarScrolls ? baseCls : `${baseCls} sticky` 
+    return !!navbarScrolls ? baseCls : `${baseCls} sticky`
   }
 
   return (
@@ -33,11 +33,11 @@ export default function Default({ noNavbar, navbarScrolls, children }) {
           <meta name="msapplication-TileImage" content="/favicon-144.png" />
           <meta name="msapplication-config" content="/browserconfig.xml" />
         </Head>
-        <div className="grid grid-rows-[auto_1fr] gap-y-6 sm:gap-y-10 md:gap-y-20 w-full h-screen overflow-y-scroll">
+        <div className="grid grid-rows-[auto_1fr] gap-y-6 sm:gap-y-10 md:gap-y-20 w-full w-screen h-screen overflow-y-scroll">
           { !noNavbar &&
             <Navbar className={ navbarCls() } />
           }
-          <div className="w-full h-full border-box max-w-6xl px-10 md:px-32 mx-auto row-start-2 col-start-1">
+          <div className="w-screen h-full border-box max-w-6xl px-10 md:px-32 mx-auto row-start-2 col-start-1">
             <div className="w-full h-full">
               <main>
                 { children }
