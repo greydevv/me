@@ -80,7 +80,7 @@ const Blockquote = ({ body }) => {
 
 const Pre = ({ children }) => {
   return (
-    <pre className="overflow-x-scroll text-red-10">
+    <pre className="text-red-10">
       { children }
     </pre>
   )
