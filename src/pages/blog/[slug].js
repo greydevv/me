@@ -41,10 +41,18 @@ export default function BlogPostView({ blog }) {
             <BlogTags tags={ blog.tags } />
           </div>
         </div>
-        <div className="flex flex-col gap-y-4 mb-20 leading-relaxed relative overflow-clip">
+        <div className="flex flex-col gap-y-4 leading-relaxed relative overflow-clip">
           <Markdown>
             { blog_body }
           </Markdown>
+        </div>
+        <div className="flex justify-center my-20">
+          <div className="relative h-20 aspect-[20/9]">
+            <Image
+              src="/signature.png" fill
+              className="opacity-20"
+            />
+          </div>
         </div>
       </div>
     </Default>

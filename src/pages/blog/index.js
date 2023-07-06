@@ -10,7 +10,6 @@ function Blog({ errors, featuredBlogs, blogs }) {
   const formatDate = (date) => {
     return moment(date).format("MMM. DD, YYYY")
   }
-
   return (
     <Default>
       { featuredBlogs.length === 0 && blogs.length === 0
@@ -64,7 +63,7 @@ function NoBlogs() {
           Nothing yet!
         </h2>
         <img
-          src="empty_icon.svg"
+          src="empty_folder.svg"
           className="absolute -left-6 -bottom-1 h-10 sm:h-12"
         />
       </div>
@@ -74,7 +73,7 @@ function NoBlogs() {
       <div className="my-4 sm:my-8 w-[20%] border-grey-10 border"/>
       <img
         className="text-red fill-red-10 h-16 sm:h-20"
-        src="signature.svg"
+        src="signature.png"
       />
     </div>
   )
