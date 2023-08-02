@@ -144,8 +144,8 @@ const WorkTab = ({ title, icon, isActive, onClick }) => {
 }
 
 function Work({ error, projects, experience }) {
-  const [ showExp, setShowExp ] = useState(false)
-  const [ activeItems, setActiveItems ] = useState(projects)
+  const [ showExp, setShowExp ] = useState(true)
+  const [ activeItems, setActiveItems ] = useState(experience)
 
   useEffect(() => {
     if (showExp) {
@@ -160,16 +160,16 @@ function Work({ error, projects, experience }) {
       <div className="flex flex-col gap-y-6 sm:gap-y-10 pb-40">
         <div className="flex items-center gap-x-2 sm:gap-x-4 text-center mx-auto md:mx-0">
           <WorkTab
-            title="PROJECTS"
-            icon="/icons/document.svg"
-            isActive={ !showExp }
-            onClick={ () => setShowExp(false) }
-          />
-          <WorkTab
             title="EXPERIENCE"
             icon="/icons/bookmark.svg"
             isActive={ showExp }
             onClick={ () => setShowExp(true) }
+          />
+          <WorkTab
+            title="PROJECTS"
+            icon="/icons/document.svg"
+            isActive={ !showExp }
+            onClick={ () => setShowExp(false) }
           />
         </div>
         { activeItems.map(([year, items], i) => {
