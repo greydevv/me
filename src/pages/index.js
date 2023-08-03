@@ -5,7 +5,7 @@ import { INTRO, ABOUT_ME } from "lookups"
 
 export default function Home() {
 
-  const contactCls = "h-5 w-5"
+  const contactCls = "h-6 w-6"
 
   return (
     <Default>
@@ -23,24 +23,24 @@ export default function Home() {
                 <Image
                   src="/icons/linkedin.svg"
                   className={ contactCls }
-                  width="24"
-                  height="24"
+                  width="36"
+                  height="36"
                 />
               </a>
               <a href="https://github.com/greydevv" target="_blank">
                 <Image
                   src="/icons/github.svg"
                   className={ contactCls }
-                  width="24"
-                  height="24"
+                  width="36"
+                  height="36"
                 />
               </a>
               <a href="https://stackoverflow.com/users/12326283/gmdev" target="_blank">
                 <Image
                   src="/icons/stackoverflow.svg"
                   className={ contactCls }
-                  width="24"
-                  height="24"
+                  width="36"
+                  height="36"
                 />
               </a>
             </div>
