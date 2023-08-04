@@ -1,5 +1,6 @@
 import Default from "layouts/Default"
-import { BlogPost, FeaturedBlogPost } from "components/BlogPost"
+import BlogPost from "components/blog/BlogPost"
+import FeaturedBlogPost from "components/blog/FeaturedBlogPost"
 import { useQuery, useMutation } from "@apollo/client"
 import moment from "moment"
 import { BLOG_POSTS_QUERY } from "apollo/queries/blog"
@@ -17,7 +18,7 @@ function Blog({ errors, featuredBlogs, blogs }) {
         : (
           <>
             { featuredBlogs.length > 0 &&
-              <div className="flex flex-col gap-y-16 mb-16">
+              <div className="flex flex-col gap-y-16 mb-8 sm:mb-16">
                 { featuredBlogs.map((blog, i) => {
                   return (
                     <FeaturedBlogPost

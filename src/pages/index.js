@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <Default>
-      <div className="flex flex-col gap-y-8 sm:gap-y-24 pb-20 mx-auto">
+      <div className="flex flex-col gap-y-8 pb-20 mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-[1fr_300px] grid-rows-auto sm:grid-rows-1 gap-y-0 gap-x-0 sm:gap-x-8 mb-8">
           <div className="flex flex-col col-start-1 row-start-2 row-end-3 sm:row-start-1 sm:row-end-2 py-5">
             <h1 className="max-w-xl mb-4 sm:mb-8 text-3xl sm:text-4xl">
