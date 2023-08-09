@@ -1,6 +1,7 @@
 import Default from "layouts/Default"
 import BlogPost from "components/blog/BlogPost"
 import FeaturedBlogPost from "components/blog/FeaturedBlogPost"
+import Image from "next/image"
 import { useQuery, useMutation } from "@apollo/client"
 import moment from "moment"
 import { BLOG_POSTS_QUERY } from "apollo/queries/blog"
@@ -10,6 +11,8 @@ function Blog({ errors, featuredBlogs, blogs }) {
   const formatDate = (date) => {
     return moment(date).format("MMM. DD, YYYY")
   }
+  featuredBlogs = []
+  blogs = []
   return (
     <Default>
       { featuredBlogs.length === 0 && blogs.length === 0
@@ -71,10 +74,14 @@ function NoBlogs() {
         Please check back frequently as I update my blog with posts about computer science, engineering, art, and anything else I find interesting...
       </p>
       <div className="my-4 sm:my-8 w-[20%] border-grey-10 border"/>
-      <img
-        className="text-red-40 fill-red-10 h-18 sm:h-24"
-        src="signature.svg"
-      />
+      <div className="h-18 sm:h-24 w-full grid">
+        <Image
+          src="/signature.svg"
+          width={0}
+          height={0}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
     </div>
   )
 }
