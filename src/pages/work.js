@@ -118,7 +118,7 @@ const WorkTab = ({ title, icon, isActive, onClick }) => {
     if (isActive) {
       return `${baseCls} text-dark`
     }
-    return `${baseCls} text-red-10`
+    return `${baseCls} text-red-20`
   }
 
   return (

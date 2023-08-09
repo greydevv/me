@@ -6,7 +6,7 @@ export default function BlogPost({ slug, title, date, hook, tags }) {
     <Link href={ `/blog/${slug}` } >
       <div className="group cursor-pointer border border-red-10 p-6 transition-all ease-in-out duration-250 md:hover:pl-12 hover:bg-red-10">
         <div className="flex md:flex-col justify-between md:start-center mb-3">
-          <p className="attribute group-hover:text-red transition-all ease-in-out duration-250">
+          <p className="attribute group-hover:text-red-30 transition-all ease-in-out duration-250">
             { date }
           </p>
           <h3>

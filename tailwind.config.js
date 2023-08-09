@@ -21,7 +21,9 @@ module.exports = {
         'grey-20': '#E8E8E8',
 
         'red': '#8F6D6D',
-        'red-10': '#DEC9C9',
+        'red-10':  '#E9DFDF',
+        'red-20': '#E0C7C7',
+        'red-30': '#D0ADAD',
       },
     },
   },
