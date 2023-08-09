@@ -11,8 +11,6 @@ function Blog({ errors, featuredBlogs, blogs }) {
   const formatDate = (date) => {
     return moment(date).format("MMM. DD, YYYY")
   }
-  featuredBlogs = []
-  blogs = []
   return (
     <Default>
       { featuredBlogs.length === 0 && blogs.length === 0
