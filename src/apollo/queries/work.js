@@ -11,12 +11,12 @@ const WORK_QUERY = gql`
       desc
       tags
       isExperience
+      priority
       interval {
         year_begin
         year_end
         month_begin
         month_end
-        featured
       }
     }
   }

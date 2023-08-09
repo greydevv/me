@@ -23,6 +23,18 @@ const WorkItemTitle = ({ title, github, site, logo }) => {
       : `https://www.${site}`
   }
 
+  const makeAlt = () => {
+    let string = ""
+    if (hasLogo) {
+      string = logo
+    } else if (hasLink) {
+      string = !!github
+        ? "github"
+        : "url"
+    }
+    return `${string} logo`
+  }
+
   const makeSrc = () => {
     if (hasLogo) {
       return `https://${process.env.NEXT_PUBLIC_S3_ORIGIN}/logos/${logo}.png`
@@ -40,6 +52,7 @@ const WorkItemTitle = ({ title, github, site, logo }) => {
           <Image
             className="static z-[2] h-6 w-6"
             src={ makeSrc() }
+            alt={ makeAlt() }
             width="24"
             height="24"
           />
@@ -61,6 +74,7 @@ const WorkItemTitle = ({ title, github, site, logo }) => {
             <Image
               className="static z-[2] h-6 w-6"
               src={ makeSrc() }
+              alt={ makeAlt() }
               width="24"
               height="24"
             />
@@ -215,30 +229,37 @@ export async function getServerSideProps() {
     })
   }
 
-  const categoryCompare = (a, b) => {
-    if (b[0] === "NOW" && Number.isInteger(a[0])) {
-      return 1
-    } else if (a[0] === "NOW" && Number.isInteger(b[0])) {
-      return -1
-    }
-    // compare numerical categories (years), descending
-    return a[0] < b[0]
-  }
-
   const itemCompare = (a, b) => {
-    if (a.interval.featured || b.interval.featured) {
-      // always put featured items at top of category
-      return 1
+    const compareNums = (a, b) => {
+      a = a ?? -1
+      b = b ?? -1
+      return (a - b) * -1
     }
-    // otherwise, sort by the begin
-    return a.interval.month_begin > b.interval.month_begin
+
+    const priority_compare = compareNums(
+      a.priority,
+      b.priority
+    )
+
+    if (priority_compare === 0) {
+      // priority was the same, sort by month_begin
+      const month_compare = compareNums(
+        a.interval.month_begin,
+        b.interval.month_begin
+      )
+      return month_compare
+    }
+    // sort by priority
+    return priority_compare
   }
 
   const filterWorks = (f, works) => {
     let map = new Map()
     for (const work of works) {
       if (f(work)) {
+        // Set priority to -1 if not present
         if (work.interval.featured || !!!work.interval.year_end) {
+          // If project/experience falls under current yaer, mark it as "NOW" instead of actual year
           const FEATURED_KEY = "NOW"
           if (map.has(FEATURED_KEY)) {
             map.set(FEATURED_KEY, [...map.get(FEATURED_KEY), work])
@@ -262,6 +283,7 @@ export async function getServerSideProps() {
       }
     })
 
+    // Reverse to sort years descending
     return Array.from(map).sort().reverse()
   }
 
