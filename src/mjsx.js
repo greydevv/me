@@ -23,7 +23,7 @@ const renderer = {
   codespan(code, lang) {
     return (
       <code key={ this.elementId }>
-        <span className="text-[#688CAD] text-base">
+        <span className="text-red-40 text-base">
           { code }
         </span>
       </code>

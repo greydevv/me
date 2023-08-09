@@ -7,7 +7,6 @@ import { BLOG_POSTS_QUERY } from "apollo/queries/blog"
 import client from "apollo"
 
 function Blog({ errors, featuredBlogs, blogs }) {
-
   const formatDate = (date) => {
     return moment(date).format("MMM. DD, YYYY")
   }
@@ -64,7 +63,7 @@ function NoBlogs() {
           Nothing yet!
         </h2>
         <img
-          src="empty_folder.svg"
+          src="icons/empty_folder.svg"
           className="absolute -left-6 -bottom-1 h-10 sm:h-12"
         />
       </div>
@@ -73,8 +72,8 @@ function NoBlogs() {
       </p>
       <div className="my-4 sm:my-8 w-[20%] border-grey-10 border"/>
       <img
-        className="text-red fill-red-10 h-16 sm:h-20"
-        src="signature.png"
+        className="text-red-40 fill-red-10 h-18 sm:h-24"
+        src="signature.svg"
       />
     </div>
   )

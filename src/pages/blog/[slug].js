@@ -49,8 +49,8 @@ export default function BlogPostView({ blog }) {
         <div className="flex justify-center my-20">
           <div className="relative h-20 aspect-[20/9]">
             <Image
-              src="/signature.png" fill
-              className="opacity-20"
+              src="/signature.svg"
+              fill
             />
           </div>
         </div>

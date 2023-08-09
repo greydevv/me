@@ -24,6 +24,7 @@ module.exports = {
         'red-10':  '#E9DFDF',
         'red-20': '#E0C7C7',
         'red-30': '#D0ADAD',
+        'red-40': '#BB8888',
       },
     },
   },
