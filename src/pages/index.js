@@ -2,11 +2,10 @@ import Image from "next/image"
 import Default from "layouts/Default"
 import BoxGraphic from "components/BoxGraphic"
 import { INTRO, ABOUT_ME } from "lookups"
+import { awsUrl } from "util.js"
 
 export default function Home() {
-
   const contactCls = "h-6 w-6"
-
   return (
     <Default>
       <div className="flex flex-col gap-y-8 pb-20 mx-auto">
@@ -46,6 +45,13 @@ export default function Home() {
             </div>
           </div>
           <BoxGraphic className="col-start-1 sm:col-start-2 sm:row-start-1 mb-8 sm:mb-0 mr-8 sm:mr-0 aspect-[4/5]">
+            <Image
+              src={ awsUrl("me/me.jpg") }
+              alt="Headshot of me"
+              cover
+              fill
+              className="object-cover"
+            />
             <img src="" alt="me" className="w-full h-full object-cover" />
           </BoxGraphic>
         </div>

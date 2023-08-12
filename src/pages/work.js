@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import client from "apollo"
 import { WORK_QUERY } from "apollo/queries/work"
 import Image from "next/image"
+import { awsUrl } from "util.js"
 
 const WorkItemTitle = ({ title, github, site, logo }) => {
   const hasLink = !!github || !!site
@@ -37,7 +38,7 @@ const WorkItemTitle = ({ title, github, site, logo }) => {
 
   const makeSrc = () => {
     if (hasLogo) {
-      return `https://${process.env.NEXT_PUBLIC_S3_ORIGIN}/logos/${logo}.png`
+      return awsUrl(`logos/${logo}.png`)
     } else if (hasLink) {
       return !!github
         ? `/icons/github.svg`

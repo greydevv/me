@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import BoxGraphic from "components/BoxGraphic"
 import BlogTags from "components/BlogTags"
+import { awsUrl } from "util.js"
 
 export default function FeaturedBlogPost({ slug, title, date, hook, tags, imgSrc }) {
   return (
@@ -32,7 +33,7 @@ export default function FeaturedBlogPost({ slug, title, date, hook, tags, imgSrc
         >
           <div className="relative h-full bg-dark aspect-square mx-auto">
             <Image
-              src={ `https://${process.env.NEXT_PUBLIC_S3_ORIGIN}/blogs/${slug}.png` }
+              src={ awsUrl(`blogs/${slug}.png`) }
               fill
             />
           </div>
