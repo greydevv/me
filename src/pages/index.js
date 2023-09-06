@@ -42,13 +42,20 @@ export default function Home() {
                   height="36"
                 />
               </a>
+              <a href="mailto:greyson.murray@gmail.com" target="_blank">
+                <Image
+                  src="/icons/mail.svg"
+                  className={ contactCls }
+                  width="36"
+                  height="36"
+                />
+              </a>
             </div>
           </div>
           <BoxGraphic className="col-start-1 sm:col-start-2 sm:row-start-1 mb-8 sm:mb-0 mr-8 sm:mr-0 aspect-[4/5]">
             <Image
               src={ awsUrl("me/me.jpg") }
               alt="Headshot of me"
-              cover
               fill
               className="object-cover"
             />
@@ -57,6 +64,12 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-[300px_1fr] grid-rows-auto sm:grid-rows-1 gap-y-0 gap-x-0 sm:gap-x-8 mb-8">
           <BoxGraphic left className="col-start-1 row-start-1 mb-8 sm:mb-8 ml-8 sm:ml-0 aspect-square">
+            <Image
+              src={ awsUrl("me/kid_me.jpg") }
+              alt="6-year old me pointing to painting"
+              fill
+              className="object-cover"
+            />
             <img src="" alt="me" className="h-full w-full object-cover"/>
           </BoxGraphic>
           <div className="flex flex-col col-start-1 sm:col-start-2 py-5 row-start-2 sm:row-start-1">
